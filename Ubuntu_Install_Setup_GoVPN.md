@@ -18,12 +18,13 @@ GoVPN 最新版本 govpn-7.4 (August 27, 2017)
 
 服务器环境和客户端系统为 Ubuntu 17.04，服务器用户名为 bob，本地客户端用户名为 alice
 
-服务器有公网 IP，假设为 12.34.56.78，防火墙开放端口 1194（或自定义其他端口）
+服务器（VPS）可以自由访问国际互联网，有公网 IP，假设为 12.34.56.78，防火墙开放端口 1194（或自定义其他端口）
 
 本地网关为 192.168.1.1，有无公网 IP 无所谓。
 
 建立的 VPN 隧道 IP 段为 172.16.0.1/24，可以自定义为其他内网网段。
 
+---
 ## 设置服务器端和本地客户端的系统环境
 ### 首先更新系统
 
@@ -48,7 +49,7 @@ GoVPN 最新版本 govpn-7.4 (August 27, 2017)
 ```
 [bob@server ~]$ go version
 ```
-#### 打印输入内容如下，Go 安装成功
+#### 打印输出内容如下，Go 安装成功
 
 ```
 go version go1.9 linux/amd64
@@ -58,7 +59,7 @@ go version go1.9 linux/amd64
 ```
 [bob@server ~]$ go env
 ```
-#### 打印输入内容如下，Go 环境变量配置正确
+#### 打印输出内容如下，Go 环境变量配置正确
 
 ```
 GOARCH="amd64"
@@ -67,7 +68,7 @@ GOEXE=""
 GOHOSTARCH="amd64"
 GOHOSTOS="linux"
 GOOS="linux"
-GOPATH="/home/user1/work"
+GOPATH="/home/bob/work"
 GORACE=""
 GOROOT="/usr/local/go"
 GOTOOLDIR="/usr/local/go/pkg/tool/linux_amd64"
@@ -102,6 +103,7 @@ PKG_CONFIG="pkg-config"
 [bob@server ~]$ make -C govpn-7.4 all
 [bob@server ~]$ cd govpn-7.4
 ```
+---
 ## 在本地客户端 
 
 ### 在 govpn-7.4 目录中创建客户端 Alice 连接服务器交换的密码短语 key.txt
@@ -120,6 +122,7 @@ govpntest
 [alice@client ~]$ ./utils/newclient.sh Alice
 Passphrase:
 ```
+
 #### Passphrase: 提示输入密码短语，和上面创建的 key.txt 内容一致，即 govpntest，打印输出内容如下
 
 ```
@@ -135,7 +138,7 @@ Place the following YAML configuration entry on the server's side:
 ```
 $balloon$s=32768,t=16,p=2$pqrN42u1ruKOWDQUFlEMgg$b0QwK15I7VanKqDAyATrE5VHyL5a+r6h4M8cevPNrxo
 ```
-
+---
 ## 在服务器端
 ### 在 govpn-7.4 目录中为客户端节点 Alice 创建配置文件，保存的文件名为 alice.yaml
 
@@ -159,12 +162,12 @@ Alice:
 [bob@server ~]$ sudo ip link set up dev tap10
 ```
 
-#### 设置服务器的 NAT 转发流量
+#### 设置服务器的 NAT 流量转发
 
 ```
 [bob@server ~]$ sudo vi /etc/sysctl.conf
 ```
-#### net.ipv4.ip_forward = 1 去掉注释符 “#”
+#### 找到这一行 #net.ipv4.ip_forward = 1 去掉注释符 “#”
 
 ```
 net.ipv4.ip_forward = 1
@@ -185,21 +188,12 @@ net.ipv4.ip_forward = 1
 #### 在服务器端启动 GoVPN 的守护进程
 
 ```
-[bob@server ~]$ sudo ./govpn-server -config alice.yaml -bind 0.0.0.0:1194
+[bob@server ~]$ sudo ./govpn-server -conf alice.yaml -bind 0.0.0.0:1194
 ```
-在客户端，为虚拟网卡 tap10 设置 IP 和路由
-
-[alice@client ~]$ sudo ip tuntap add dev tap10 mode tap
-[alice@client ~]$ sudo ip addr add 172.16.0.2/24 dev tap10
-[alice@client ~]$ sudo ip link set up dev tap10
-[alice@client ~]$ sudo ip route add 0/1 via 172.16.0.1
-[alice@client ~]$ sudo ip route add 128/1 via 172.16.0.1
-[alice@client ~]$ sudo ip route add 12.34.56.78 via 192.168.1.1
-[alice@client ~]$ sudo ip route del default
-[alice@client ~]$ sudo ip route add default dev tap10
-
+---
 ## 在客户端
 ### 在客户端，为虚拟网卡 tap10 设置 IP 和路由
+
 ```
 [alice@client ~]$ sudo ip tuntap add dev tap10 mode tap
 [alice@client ~]$ sudo ip addr add 172.16.0.2/24 dev tap10
@@ -214,7 +208,7 @@ net.ipv4.ip_forward = 1
 
 ```
 [alice@client ~]$ ./govpn-client \
-    -key /home/user1/work/govpn-7.4/key.txt
+    -key /home/alice/work/govpn-7.4/key.txt
     -verifier '$balloon$s=32768,t=16,p=2$pqrN42u1ruKOWDQUFlEMgg' \
     -iface tap10 \
     -remote 12.34.56.78:1194
@@ -250,6 +244,7 @@ PING 172.16.0.1 (172.16.0.1) 56(84) bytes of data.
 rtt min/avg/max/mdev = 83.038/83.212/83.592/0.261 ms
 ````
 #### 说明 VPN 隧道已通
+
 ### 用 curl 命令测试隧道的流量转发状态
 
 ```
@@ -271,12 +266,15 @@ sudo ip route del 12.34.56.78 via 192.168.1.1
 sudo ip route del default
 sudo ip route add default via 192.168.1.1
 ```
+---
 ## 其他
 
 GoVPN 设计原理和使用方法参考 http://www.cypherpunks.ru/govpn/index.html
 
 如果拥有 IPv4 和 IPv6，设置方法参考开发者给出的示例 http://www.cypherpunks.ru/govpn/Example.html#Example
 
-GoVPN 在数字隐私保护政府强权的国家，或者在网络封锁和言论审查的国家，都可以有限捍卫网络用户的数字权利。
+GoVPN 目前不支持 Windows 系统和 Android 以及 iOS 系统。
 
-GoVPN 在中国、俄罗斯、伊朗等极权国家，能有效突破网络封锁，加密访问被封锁的网站，自由使用互联网。
+GoVPN 在数字权利遭强权政府日益侵害的国家，能有效捍卫网络用户的数字权利。
+
+GoVPN 在中国、俄罗斯、伊朗等极权国家，能有效突破网络封锁，突破 GFW 封锁，加密访问被封锁的网站，自由使用互联网。
