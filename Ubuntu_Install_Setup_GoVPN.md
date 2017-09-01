@@ -1,5 +1,3 @@
-# Ubuntu 安装部署 GoVPN，建立突破网络封锁和审查的 VPN 隧道
-
 ## 关于 GoVPN
 
 GoVPN 是由俄罗斯 “快乐黑客” Sergey Matveev 使用 Go 语言开发的开源免费的 VPN 软件。
@@ -49,6 +47,7 @@ GoVPN 最新版本 govpn-7.4 (August 27, 2017)
 ```
 [bob@server ~]$ go version
 ```
+
 #### 打印输出内容如下，Go 安装成功
 
 ```
@@ -90,6 +89,7 @@ PKG_CONFIG="pkg-config"
 ```
 [bob@server ~]$ sudo apt make make-guile
 ```
+
 ### 创建 work 目录，下载 GoVPN 源码并编译
 
 ```
@@ -103,6 +103,7 @@ PKG_CONFIG="pkg-config"
 [bob@server ~]$ make -C govpn-7.4 all
 [bob@server ~]$ cd govpn-7.4
 ```
+
 ---
 ## 在本地客户端 
 
@@ -111,11 +112,13 @@ PKG_CONFIG="pkg-config"
 ```
 [alice@client ~]$ vi key.txt
 ```
+
 #### 假定密码短语为 govpntest（也可以是长度为 32 个字符的 Base64 编码）
 
 ```
 govpntest
 ```
+
 ### 在客户端，生成客户名为 Alice 的验证文件:
 
 ```
@@ -135,9 +138,11 @@ Place the following YAML configuration entry on the server's side:
 ```
 
 #### Alice 的验证文件值为:
+
 ```
 $balloon$s=32768,t=16,p=2$pqrN42u1ruKOWDQUFlEMgg$b0QwK15I7VanKqDAyATrE5VHyL5a+r6h4M8cevPNrxo
 ```
+
 ---
 ## 在服务器端
 ### 在 govpn-7.4 目录中为客户端节点 Alice 创建配置文件，保存的文件名为 alice.yaml
@@ -145,6 +150,7 @@ $balloon$s=32768,t=16,p=2$pqrN42u1ruKOWDQUFlEMgg$b0QwK15I7VanKqDAyATrE5VHyL5a+r6
 ```
 [bob@server ~]$ vi alice.yaml
 ```
+
 #### verifier: 之后的内容为客户段生成的参数值，和上面的内容一致
 
 ```
@@ -167,11 +173,15 @@ Alice:
 ```
 [bob@server ~]$ sudo vi /etc/sysctl.conf
 ```
+
 #### 找到这一行 #net.ipv4.ip_forward = 1 去掉注释符 “#”
 
 ```
 net.ipv4.ip_forward = 1
 ```
+
+#### 执行 sysctl 并生效
+
 ```
 [bob@server ~]$ sudo sysctl -p
 ```
@@ -190,6 +200,7 @@ net.ipv4.ip_forward = 1
 ```
 [bob@server ~]$ sudo ./govpn-server -conf alice.yaml -bind 0.0.0.0:1194
 ```
+
 ---
 ## 在本地客户端
 ### 在客户端，为虚拟网卡 tap10 设置 IP 和路由
@@ -204,6 +215,7 @@ net.ipv4.ip_forward = 1
 [alice@client ~]$ sudo ip route del default
 [alice@client ~]$ sudo ip route add default dev tap10
 ```
+
 ### 在客户端的 govpn-7.4 目录中启动 govpn-client
 -key 值为启动客户端的密码短语
 -verifier 值为验证密钥
@@ -212,7 +224,7 @@ net.ipv4.ip_forward = 1
 
 ```
 [alice@client ~]$ ./govpn-client \
-    -key /home/alice/work/govpn-7.4/key.txt
+    -key /home/alice/work/govpn-7.4/key.txt
     -verifier '$balloon$s=32768,t=16,p=2$pqrN42u1ruKOWDQUFlEMgg' \
     -iface tap10 \
     -remote 12.34.56.78:1194
@@ -223,9 +235,12 @@ net.ipv4.ip_forward = 1
 ```
 [alice@client ~]$ ./govpn-client -key key.txt -verifier '$balloon$s=32768,t=16,p=2$pqrN42u1ruKOWDQUFlEMgg' -iface tap10 -remote 12.34.56.78:1194
 ```
+
+至此，服务器端和本地客户端的 VPN 隧道已建立完成
+
 ---
-## 至此，服务器端和本地客户端的 VPN 隧道已建立完成
-### 测试隧道的连接状态
+## 在本地客户端，测试 VPN 隧道的连接状态
+
 #### Ping 服务器端地址 172.16.0.1
 
 ```
@@ -248,6 +263,7 @@ PING 172.16.0.1 (172.16.0.1) 56(84) bytes of data.
 8 packets transmitted, 8 received, 0% packet loss, time 7007ms
 rtt min/avg/max/mdev = 83.038/83.212/83.592/0.261 ms
 ````
+
 #### 说明 VPN 隧道已通
 
 ### 用 curl 命令测试隧道的流量转发状态
@@ -255,11 +271,15 @@ rtt min/avg/max/mdev = 83.038/83.212/83.592/0.261 ms
 ```
 [alice@client ~]$ curl ifconfig.me
 ```
+
+### 显示 IP 为服务器的公网 IP
+
 ```
 12.34.56.78
 ```
 
-#### curl 获取到了服务器的公网 IP，流量转发成功
+curl 获取到了服务器的公网 IP，流量转发成功
+
 ---
 ## Disable GoVPN，禁用 GoVPN 守护进程
 
@@ -271,6 +291,7 @@ sudo ip route del 12.34.56.78 via 192.168.1.1
 sudo ip route del default
 sudo ip route add default via 192.168.1.1
 ```
+
 ---
 ## 其他
 
@@ -278,7 +299,7 @@ GoVPN 设计原理和使用方法参考 http://www.cypherpunks.ru/govpn/index.ht
 
 如果拥有 IPv4 和 IPv6，设置方法参考开发者给出的示例 http://www.cypherpunks.ru/govpn/Example.html#Example
 
-GoVPN 目前不支持 Windows 系统和 Android 以及 iOS 系统。
+GoVPN 目前不支持 Windows，Android 以及 iOS 系统。
 
 GoVPN 在数字权利遭强权政府日益侵害的国家，能有效捍卫网络用户的数字权利。
 
