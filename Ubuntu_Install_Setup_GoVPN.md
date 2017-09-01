@@ -106,7 +106,7 @@ PKG_CONFIG="pkg-config"
 ---
 ## 在本地客户端 
 
-### 在 govpn-7.4 目录中创建客户端 Alice 连接服务器交换的密码短语 key.txt
+### 在 govpn-7.4 目录中创建客户端 Alice 连接服务器密码短语 key.txt
 
 ```
 [alice@client ~]$ vi key.txt
@@ -191,7 +191,7 @@ net.ipv4.ip_forward = 1
 [bob@server ~]$ sudo ./govpn-server -conf alice.yaml -bind 0.0.0.0:1194
 ```
 ---
-## 在客户端
+## 在本地客户端
 ### 在客户端，为虚拟网卡 tap10 设置 IP 和路由
 
 ```
@@ -204,7 +204,11 @@ net.ipv4.ip_forward = 1
 [alice@client ~]$ sudo ip route del default
 [alice@client ~]$ sudo ip route add default dev tap10
 ```
-### 在客户端的 govpn-7.4 目录中启动 govpn-client，-remote 值为服务器的公网 IP
+### 在客户端的 govpn-7.4 目录中启动 govpn-client
+-key 值为启动客户端的密码短语
+-verifier 值为验证密钥
+-iface 值为虚拟网卡名称
+-remote 值为远程服务器的公网 IP
 
 ```
 [alice@client ~]$ ./govpn-client \
@@ -219,7 +223,8 @@ net.ipv4.ip_forward = 1
 ```
 [alice@client ~]$ ./govpn-client -key key.txt -verifier '$balloon$s=32768,t=16,p=2$pqrN42u1ruKOWDQUFlEMgg' -iface tap10 -remote 12.34.56.78:1194
 ```
-## 至此，已建立了本地到服务器端的 VPN 隧道
+---
+## 至此，服务器端和本地客户端的 VPN 隧道已建立完成
 ### 测试隧道的连接状态
 #### Ping 服务器端地址 172.16.0.1
 
