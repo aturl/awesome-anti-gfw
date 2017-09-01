@@ -224,17 +224,17 @@ net.ipv4.ip_forward = 1
 -remote 值为远程服务器的公网 IP
 
 ```
-[alice@client ~]$ ./govpn-client \
+[alice@client ~]$ sudo ./govpn-client \
     -key /home/alice/work/govpn-7.4/key.txt
     -verifier '$balloon$s=32768,t=16,p=2$pqrN42u1ruKOWDQUFlEMgg' \
     -iface tap10 \
     -remote 12.34.56.78:1194
 ```
 
-#### 或者不带换行符输的启动命令
+#### 或者不带换行符的启动命令
 
 ```
-[alice@client ~]$ ./govpn-client -key key.txt -verifier '$balloon$s=32768,t=16,p=2$pqrN42u1ruKOWDQUFlEMgg' -iface tap10 -remote 12.34.56.78:1194
+[alice@client ~]$ sudo ./govpn-client -key key.txt -verifier '$balloon$s=32768,t=16,p=2$pqrN42u1ruKOWDQUFlEMgg' -iface tap10 -remote 12.34.56.78:1194
 ```
 
 至此，服务器端和本地客户端的 VPN 隧道已建立完成
