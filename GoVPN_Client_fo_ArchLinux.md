@@ -9,7 +9,7 @@ GoVPN 项目官方网站 http://www.govpn.info/
 
 GoVPN 源代码由开发者自我托管，代码仓库 http://git.cypherpunks.ru/cgit.cgi/govpn.git/
 
-GoVPN 最新版本 govpn-7.4 (August 27, 2017)，AUR 仓库为 govpn 7.3-1，由 <a href="https://twitter.com/wzyboy">wzyboy</a> 维护。
+GoVPN 最新版本 govpn-7.4 (August 27, 2017)，AUR 仓库为 <a href="https://aur.archlinux.org/packages/govpn">govpn 7.3-1</a>，由 <a href="https://twitter.com/wzyboy">wzyboy</a> 维护。
 
 （题外话，Sergey Matveev 因不认同 GitHub 的某些政策和做法，从 GitHub 仓库删除了 GoVPN 源代码。）
 
