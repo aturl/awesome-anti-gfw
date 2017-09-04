@@ -240,10 +240,10 @@ sudo ip route add default via 192.168.1.1
 
 WireGuard 设计原理和使用方法参考 https://www.wireguard.com/
 
-WireGuard 快平台，支持各种 Linux 发行版，但目前尚不支持 Windows，Android（开发中） 以及 iOS 系统。
+WireGuard 跨平台，支持各种 Linux 发行版，目前 Windows 和 macOS 客户端（Go 实现）以及 Android 应用都在开发中。
 
-WireGuard 在数字权利遭强权政府日益侵害的国家，能有效捍卫网络用户的数字权利。
+WireGuard 在数字权利遭受强权政府日益侵害的国家，能有效捍卫网络用户的数字权利。
 
-WireGuard 在中国、俄罗斯、伊朗等极权国家，能有效突破网络封锁，突破 GFW 封锁，加密访问被封锁的网站，自由使用互联网。
+WireGuard GoVPN 在中国、俄罗斯、伊朗等网络审查严重的国家，能有效突破网络封锁，突破 GFW 封锁，加密访问被封锁的网站，自由使用互联网。
 
 原创内容，转载请注明出处。
