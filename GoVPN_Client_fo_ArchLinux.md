@@ -9,7 +9,7 @@ GoVPN 项目官方网站 http://www.govpn.info/
 
 GoVPN 源代码由开发者自我托管，代码仓库 http://git.cypherpunks.ru/cgit.cgi/govpn.git/
 
-GoVPN 最新版本 govpn-7.4 (August 27, 2017)，AUR 仓库为 <a href="https://aur.archlinux.org/packages/govpn">govpn 7.3-1</a>，由 <a href="https://twitter.com/wzyboy">wzyboy</a> 维护。
+GoVPN 最新版本 govpn-7.4 (August 27, 2017)，AUR 仓库 <a href="https://aur.archlinux.org/packages/govpn">govpn 7.4-1</a>，由 <a href="https://twitter.com/wzyboy">wzyboy</a> 维护。
 
 （题外话，Sergey Matveev 因不认同 GitHub 的某些政策和做法，从 GitHub 仓库删除了 GoVPN 源代码。）
 
@@ -178,6 +178,6 @@ GoVPN 目前不支持 Windows，Android 以及 iOS 系统。
 
 GoVPN 在数字权利遭强权政府日益侵害的国家，能有效捍卫网络用户的数字权利。
 
-GoVPN 在中国、俄罗斯、伊朗等极权国家，能有效突破网络封锁，突破 GFW 封锁，加密访问被封锁的网站，自由使用互联网。
+GoVPN 在中国、俄罗斯、伊朗等网络审查严重的国家，能有效突破网络封锁，突破 GFW 封锁，加密访问被封锁的网站，自由使用互联网。
 
 原创内容，转载请注明出处。
