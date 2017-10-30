@@ -88,7 +88,7 @@ PKG_CONFIG="pkg-config"
 ### Go 安装并配置完毕后，安装编译 GoVPN 所需的依赖包
 
 ```
-[bob@server ~]$ sudo apt make make-guile
+[bob@server ~]$ sudo apt install make make-guile
 ```
 
 ### 创建 work 目录，下载 GoVPN 源码并编译
