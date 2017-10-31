@@ -148,7 +148,7 @@ sudo wg-quick down wg0
 ```
 [Interface]
 PrivateKey = SHBjWA3uAYAZc+TUvr8RCTA5SVQnt+aSVkdlPKhD1Hk=
-Address = 10.100.0.5/24
+Address = 10.10.0.5/24
 PostUp = echo nameserver 8.8.8.8 | resolvconf -a tun.%i -m 0 -x
 PostDown = resolvconf -d tun.%i
 
