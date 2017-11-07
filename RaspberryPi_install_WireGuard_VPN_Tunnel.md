@@ -8,13 +8,13 @@ Raspberry Pi 2/3 B+ 操作系统（RASPBIAN STRETCH LITE, 2017-09-07, Kernel 版
 
 ### 服务器端安装 WireGuard
 
-服务器端安装 WireGuard 可以参考之前的方法 https://github.com/aturl/awesome-anti-gfw/blob/master/WireGuard_VPN_Tunnel.md
+服务器端安装 WireGuard 可以参考之前的方法：<a href="WireGuard_VPN_Tunnel.md">在 Ubuntu 部署 VPN 隧道 WireGuard</a>
 
 （将会另写一篇用 wg-quick 快速脚本启动 WireGuard 的内容）
 
 ### Raspberry Pi 安装 WireGuard
 
-在 Raspberry Pi 安装 WireGuard 可以参考链接中的方法，详细有效。 [Install WireGuard on Raspberry Pi](https://github.com/adrianmihalko/raspberrypiwireguard)
+在 Raspberry Pi 安装 WireGuard 可以参考链接中的方法，详细有效。 [Install WireGuard on Raspberry Pi](https://github.com/adrianmihalko/raspberrypiWireGuard)
 
 另外，还要给 Raspberry Pi 安装 Linux 内核头文件，安装 WireGuard 需要编译内核模块。参考链接：[Raspberry Pi kernel source installer](https://github.com/notro/rpi-source/wiki)
 
@@ -55,15 +55,15 @@ gcc (Raspbian 6.3.0-18+rpi1) 6.3.0 20170516
 sudo rpi-source --skip-gcc
 ```
 
-### 继续安装 Wireguard
+### 继续安装 WireGuard
 
-安装编译 Wireguard 所需依赖包
+安装编译 WireGuard 所需依赖包
 
 ```
 sudo apt-get install libmnl-dev build-essential git
 ```
 
-git Wireguard 源码并编译安装
+git WireGuard 源码并编译安装
 
 ```
 git clone https://git.zx2c4.com/WireGuard
@@ -73,7 +73,7 @@ make
 sudo make install
 ```
 
-如果没什么错误提示就完成了 Wireguard 安装。
+如果没什么错误提示就完成了 WireGuard 安装。
 
 ### 两端 VPN 隧道连接情况
 （假设服务器端公网 IPv4 是 12.34.56.78 ，客户端映射的内网 IPv4 是 111.222.1.1）
@@ -171,8 +171,8 @@ sudo wg-quick up wg0
 sudo wg-quick down wg0
 ```
 
-#### 关于 Wireguard 默认端口
-Wireguard 默认端口是 51820 ，对于 GFW 来说那一个端口都一样，不过换一个也无妨。
+#### 关于 WireGuard 默认端口
+WireGuard 默认端口是 51820 ，对于 GFW 来说那一个端口都一样，不过换一个也无妨。
 
 服务器端的端口在 wg0.conf 配置文件中指定监听端口就可以。 Raspberry Pi 通过修改 wg-quick 文件约第 152 行
 
@@ -190,4 +190,4 @@ add_default() {
 		done
 ```
 
-（用 wg-quick 脚本启动 Wireguard 服务会另写一篇。）
+（用 wg-quick 脚本启动 WireGuard 服务会另写一篇。）
