@@ -189,5 +189,9 @@ add_default() {
 			((DEFAULT_TABLE++))
 		done
 ```
+#### Raspberry Pi 编译 WireGuard 可能出现的错误
+Raspberry Pi 编译时可能出现类似 ```make: *** [module] Error 2``` 的错误，提示内核模块没有找到（这个错误提示暂时没有重现，有的话会补上）
+
+先用 ```rpi-update``` 更新 Raspberry Pi 内核和固件，重启后重新编译 WireGuard。
 
 （用 wg-quick 脚本启动 WireGuard 服务会另写一篇。）
