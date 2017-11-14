@@ -170,11 +170,27 @@ sudo wg-quick up wg0
 ```
 sudo wg-quick down wg0
 ```
+启动 ```wg-quick``` 如果出现 ```/usr/bin/wg-quick: line 220: resolvconf: command not found``` 错误，安装 openresolv 包。
+
+#### 可以用 Systemd 设置 ```wg-quick``` 
+
+开机启动 ```wg-quick```，执行下面的命令
+```
+sudo systemctl enable wg-quick@wg0
+```
+设置开机启动以后，WireGuard 并不会马上启动，需要等到下次开机才能启动。
+如果想马上运行 WireGuard 执行 systemctl start 命令。
+```
+sudo systemctl start wg-quick@wg0
+```
+停止服务、重启服务、杀死进程、服务状态分别用下边命令
+```systemctl stop```, ```systemctl restart```, ```systemctl kill```, ```systemctl status```
 
 #### 关于 WireGuard 默认端口
 WireGuard 默认端口是 51820 ，对于 GFW 来说那一个端口都一样，不过换一个也无妨。
 
-服务器端的端口在 wg0.conf 配置文件中指定监听端口就可以。 Raspberry Pi 通过修改 wg-quick 文件约第 152 行
+服务器端的端口在 wg0.conf 配置文件中指定监听端口就可以。 Raspberry Pi 通过修改 wg-quick 文件约第 152 行。
+更新 WireGuard 后会覆盖旧的 wg-quick 脚本，需要重新再修改端口。
 
 ```
 sudo vi /usr/bin/wg-quick
