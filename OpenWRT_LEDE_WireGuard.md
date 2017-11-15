@@ -133,7 +133,7 @@ root@Router:~#
 Ping 服务器地址 ```10.10.0.1```
 ```
 root@Router:~# ping 10.10.0.1
-PING 10.10.0.1 (10.100.0.1): 56 data bytes
+PING 10.10.0.1 (10.10.0.1): 56 data bytes
 64 bytes from 10.10.0.1: seq=0 ttl=64 time=41.628 ms
 64 bytes from 10.10.0.1: seq=1 ttl=64 time=40.989 ms
 64 bytes from 10.10.0.1: seq=2 ttl=64 time=40.988 ms
