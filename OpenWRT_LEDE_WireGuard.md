@@ -149,3 +149,6 @@ PING 10.10.0.1 (10.10.0.1): 56 data bytes
 round-trip min/avg/max = 40.780/41.030/41.628 ms
 root@Router:~#
 ```
+### 参考资料
+
+[How to configure WireGuard on OpenWrt/LEDE using LuCi](https://danrl.com/blog/2017/luci-proto-wireguard/)
