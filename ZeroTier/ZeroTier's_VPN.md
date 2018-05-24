@@ -121,22 +121,44 @@ COMMIT
 
 显示已保存了转发规则，可以转发来自客户端的流量。
 
+### 通过 https://my.zerotier.com/ 管理自己的网络
 
+登录 https://my.zerotier.com/，建立自己的 ```Network ID```，这一部分参照教程作者 Sam Cater 的图文内容，很方便。
 
+### 客户端设置
 
+如果客户端是 Raspberry Pi 或其他 Linux 系统，编辑 ```/etc/sysctl.conf``` 文件：
 
+```
+sudo vi /etc/sysctl.conf
+```
 
+在 ```/etc/sysctl.conf``` 文件底部添加一行
 
+```
+net.ipv4.conf.all.rp_filter=2
+```
 
+```:wq!``` 保存并退出编辑状态
 
+用 ```sysctl -p``` 命令触发新的内核配置，使其生效。
 
+```
+sudo sysctl -p
+```
 
+在客户端用 ```zerotier-cli``` 命令设置转发流量，下面的 ```NetworkID``` 指 https://my.zerotier.com/ 分配到的 16 位长度的 ```Network ID```
 
+```
+sudo zerotier-cli set NetworkID allowDefault=1
+```
 
+```allowDefault=1``` 表示启用 ZeroTier 转发全部流量，```allowDefault=1``` 表示禁用 ZeroTier 转发全部流量。
 
+查看和 VPS 端建立的 ZeroTier VPN状态：
 
+```
+curl ifconfig.me
+```
 
-
-
-
-
+输出的 IP 地址如果是 VPS 的公网 IP，说明 VPN 隧道建立成功，如果没有输出结果或 IP 为本地 ISP 分配的，说明 VPN 隧道不成功。
