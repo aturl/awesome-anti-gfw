@@ -15,9 +15,11 @@ ___
 
 ### 安装
 
-安装 ZeroTier 官方提供已编译好的二进制安装包：
+强烈建议使用 ZeroTier 官方提供的安装方法：
 
 https://www.zerotier.com/download.shtml
+
+快速安装可以使用 ZeroTier 官方提供已编译好的二进制安装包：
 
 https://download.zerotier.com/
 
