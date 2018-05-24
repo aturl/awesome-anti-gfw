@@ -146,6 +146,11 @@ net.ipv4.conf.all.rp_filter=2
 ```
 sudo sysctl -p
 ```
+查看输出内容，显示内核配置已更新：
+
+```
+net.ipv4.conf.all.rp_filter = 2
+```
 
 在客户端用 ```zerotier-cli``` 命令设置转发流量，下面的 ```NetworkID``` 指 https://my.zerotier.com/ 分配到的 16 位长度的 ```Network ID```
 
