@@ -152,13 +152,52 @@ sudo sysctl -p
 net.ipv4.conf.all.rp_filter = 2
 ```
 
-在客户端用 ```zerotier-cli``` 命令设置转发流量，下面的 ```NetworkID``` 指 https://my.zerotier.com/ 分配到的 16 位长度的 ```Network ID```
+在客户端用 ```zerotier-cli``` 命令设置转发流量，下面的 ```NetworkID``` 指 https://my.zerotier.com/ 分配到的 16 位长度的 ```Network ID```，如 ```8uhgr5689uyt532s```
 
 ```
-sudo zerotier-cli set NetworkID allowDefault=1
+sudo zerotier-cli set 8uhgr5689uyt532s allowDefault=1
 ```
 
 ```allowDefault=1``` 表示启用 ZeroTier 转发全部流量，```allowDefault=1``` 表示禁用 ZeroTier 转发全部流量。
+
+执行上面的命令后，会输出以下设置参数：
+
+```
+{
+ "allowDefault": true,
+ "allowGlobal": false,
+ "allowManaged": true,
+ "assignedAddresses": [
+  "192.168.192.100/24"
+ ],
+ "bridge": false,
+ "broadcastEnabled": true,
+ "dhcp": false,
+ "id": "8uhgr5689uyt532s",
+ "mac": "00:00:00:00:00:00",
+ "mtu": 2800,
+ "name": "compassionate_brattain",
+ "netconfRevision": 3,
+ "nwid": "8uhgr5689uyt532s",
+ "portDeviceName": "zt0",
+ "portError": 0,
+ "routes": [
+  {
+   "flags": 0,
+   "metric": 0,
+   "target": "192.168.192.0/24",
+   "via": null
+  },
+  {
+   "flags": 0,
+   "metric": 0,
+   "target": "0.0.0.0/0",
+   "via": "192.168.192.1"
+  }
+ ],
+ "status": "OK",
+ "type": "PRIVATE"
+```
 
 查看和 VPS 端建立的 ZeroTier VPN状态：
 
