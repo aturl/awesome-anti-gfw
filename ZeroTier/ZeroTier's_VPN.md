@@ -1,0 +1,107 @@
+# 启用 ZeroTier 的 VPN 功能，通过 VPN 转发客户端流量
+
+著名的 VPS 服务商 DigitalOcean 发布一篇非常详细使用的 ZeroTier 教程，作者是 Sam Cater [Twitter: @samcater](https://twitter.com/samcater)
+
+[Getting Started with Software-Defined Networking and Creating a VPN with ZeroTier One](https://www.digitalocean.com/community/tutorials/getting-started-software-defined-networking-creating-vpn-zerotier-one?utm_medium=social&utm_source=twitter&utm_campaign=zerotier_tut&utm_content=no_image)
+
+***以下内容参考 Sam Cater 教程中 [VPN 部分](https://www.digitalocean.com/community/tutorials/getting-started-software-defined-networking-creating-vpn-zerotier-one?utm_medium=social&utm_source=twitter&utm_campaign=zerotier_tut&utm_content=no_image#step-5-%E2%80%94-enabling-zerotier's-vpn-capability)进行了设置，证实可行，将过程记录如下：***
+
+### 服务器环境
+
+服务器系统为 Ubuntu 18.04，已安装 ZeroTierOne-1.2.10，并加入 ZeroTier PLANET 网络。
+
+### 服务器设置
+
+启用服务器 Linux 内核数据转发，查看当前配置，运行以下命令：
+
+```
+sudo sysctl net.ipv4.ip_forward
+```
+
+输出 ```net.ipv4.ip_forward = 0``` 为未启用，输出 ```net.ipv4.ip_forward = 1``` 为已启用。
+
+假如未启用，需要设置为启用，运行以下命令：
+
+```
+sudo vi /etc/sysctl.conf
+```
+
+在 ```/etc/sysctl.conf``` 文件底部添加一行
+
+```
+net.ipv4.ip_forward = 1
+```
+
+```:wq!``` 保存并退出编辑状态
+
+用 ```sysctl -p``` 命令触发新的内核配置，使其生效。
+
+```
+sudo sysctl -p
+```
+
+再次查看当前配置，运行以下命令：
+
+```
+sudo sysctl net.ipv4.ip_forward
+```
+
+输出显示已经启用数据转发：
+
+```
+net.ipv4.ip_forward = 1
+```
+
+用 ```ip link show``` 或 ```ip addr``` 显示网络接口的名称，输入如下（这是教程作者 Sam Cater 的输出内容，照搬过来）
+
+```
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
+    link/ether 72:2d:7e:6f:5e:08 brd ff:ff:ff:ff:ff:ff
+3: zt0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 2800 qdisc pfifo_fast state UNKNOWN mode DEFAULT group default qlen 1000
+    link/ether be:82:8f:f3:b4:cd brd ff:ff:ff:ff:ff:ff
+``` 
+
+添加 ```iptables``` 规则
+
+```
+sudo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+sudo iptables -A FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+```
+
+允许 VPS 的网卡 eth0 转发所有 ZeroTier 虚拟网卡 zt0 的流量 
+
+```
+sudo iptables -A FORWARD -i zt0 -o eth0 -j ACCEPT
+```
+
+因为 iptables 规则会在 VPS 重启后丢失，安装 ```iptables-persistent``` 保存添加的规则
+
+```
+sudo apt install iptables-persistent
+```
+```
+sudo netfilter-persistent save
+```
+
+运行后 ```sudo netfilter-persistent save``` 会有提示，分别保存 IPv4 和 IPv6 的规则，反而，IPv4 yes IPv6 no
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
