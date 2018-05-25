@@ -96,21 +96,21 @@ root@Router:~#
 登录路由器的 Web 界面，创建 WireGuard 网络接口， http://192.168.1.1/cgi-bin/luci/admin/network/iface_add
 
 创建一个名为 ```WG``` 的接口，协议选择 ```WireGuard VPN```
-![LEDE-WireGuard-1](img/1.png)
+![LEDE-WireGuard-1](../img/1.png)
 
 填入本地路由器生成的 ```Private Key```，设置监听端口和服务器 IP 地址
-![LEDE-WireGuard-2](img/2.png)
+![LEDE-WireGuard-2](../img/2.png)
 
 填入远端服务器公钥，IP 地址和远程端口
-![LEDE-WireGuard-3](img/3.png)
+![LEDE-WireGuard-3](../img/3.png)
 
 填完相关参数后，本地路由器隧道 IP 为 ```10.10.0.5``` 已和远端服务器 ```10.10.0.1``` 建立连接并有收发包。
-![LEDE-WireGuard-4](img/4.png)
+![LEDE-WireGuard-4](../img/4.png)
 
 ### 查看 VPN 隧道连接状态
 
 通过 [Diagnostics](http://192.168.1.1/cgi-bin/luci/admin/network/diagnostics) Ping 服务器
-![LEDE-WireGuard-5](img/5.png)
+![LEDE-WireGuard-5](../img/5.png)
 
 SSH 登录路由器，用 ```wg show``` 命令显示连接状态
 
