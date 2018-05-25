@@ -2,15 +2,13 @@
 
 ## 两端环境
 
-服务器系统为 Ubuntu 17.10
+服务器系统为 Ubuntu 18.04
 
 Raspberry Pi 2/3 B+ 操作系统（RASPBIAN STRETCH LITE, 2017-09-07, Kernel 版本 4.9）
 
 ### 服务器端安装 WireGuard
 
-服务器端安装 WireGuard 可以参考之前的方法：<a href="WireGuard_VPN_Tunnel.md">在 Ubuntu 部署 VPN 隧道 WireGuard</a>
-
-（将会另写一篇用 wg-quick 快速脚本启动 WireGuard 的内容）
+服务器端安装 WireGuard 可以参考：<a href="../WireGuard/Ubuntu_WireGuard_VPN_Server.md">在 Ubuntu 部署 WireGuard VPN 服务器</a>
 
 ### Raspberry Pi 安装 WireGuard
 
@@ -209,5 +207,3 @@ add_default() {
 Raspberry Pi 编译时可能出现类似 ```make: *** [module] Error 2``` 的错误，提示内核模块没有找到（这个错误提示暂时没有重现，有的话会补上）
 
 先用 ```rpi-update``` 更新 Raspberry Pi 内核和固件，重启后重新编译 WireGuard。
-
-（用 wg-quick 脚本启动 WireGuard 服务会另写一篇。）
