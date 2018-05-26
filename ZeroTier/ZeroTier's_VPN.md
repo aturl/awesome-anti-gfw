@@ -123,7 +123,7 @@ COMMIT
 
 ### 通过 https://my.zerotier.com/ 管理自己的网络
 
-登录 https://my.zerotier.com/，建立自己的 ```Network ID```，这一部分参照教程作者 Sam Cater 的图文内容，很方便。
+登录 https://my.zerotier.com/ ，建立自己的 ```Network ID```，这一部分参照教程作者 Sam Cater 的图文内容，很方便。
 
 ### 客户端设置
 
