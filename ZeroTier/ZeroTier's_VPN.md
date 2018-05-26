@@ -243,6 +243,32 @@ ping 192.168.192.1
 
 Windows 系统设置方法类似，正常设置应该很容易建立 VPN 隧道。
 
+#### Android 系统
+
+Android 需要从 Google Play store 应用商店下载 ZeroTier One App
+
+https://play.google.com/store/apps/details?id=com.zerotier.one
+
+安装 ZeroTier One for Android App 后，设置非常简单：
+
+在 ```NETWORK ID``` 填入 https://my.zerotier.com/ 分配到的 16 位长度的 ```Network ID```，如 ```8uhgr5689uyt532s```
+
+勾选 ```Route all traffic through ZeroTier.(...)```，就是通过 ZeroTier 路由全部流量
+
+勾选 ```Use Custom DNS Servers```，使用自定义 DNS 服务器，填入 ````8.8.8.8```` ````9.9.9.9```` 公共 DNS 服务器地址。
+
+点击 ```Add Network``` 
+
+然后进入 https://my.zerotier.com/ 勾选新加入的 Android 客户端。
+
+如下图：
+
+![ZeroTier for Android](../img/ZeroTier_Android.png)
+
+可以通过手机浏览器访问 https://www.google.com 来验证是否成功建立 VPN 隧道。
+
+在 Android，不论是 Wi-Fi 网络还是移动数据网络，均可以连通 ZeroTier VPN 隧道，只是稳定性不如桌面系统，并且 ZeroTier One for Android App 目前有 Bugs，希望开发者在以后的版本中修复。
+
 ### 客户端的 DNS 设置
 
 建议客户端使用声誉比较好的公共 DNS 服务，如 ````8.8.8.8```` ````9.9.9.9```` ````1.1.1.1````，避免使用墙内 DNS。
