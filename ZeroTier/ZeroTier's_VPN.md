@@ -85,7 +85,7 @@ sudo apt install iptables-persistent
 sudo netfilter-persistent save
 ```
 
-运行后 ```sudo netfilter-persistent save``` 会有提示，分别保存 IPv4 和 IPv6 的规则，如果仅有 IPv4 yes，IPv6 no
+运行后 ```sudo netfilter-persistent save``` 会有提示，分别保存 IPv4 和 IPv6 的规则，如果仅有 IPv4，yes，IPv6，no
 
 查看已保存的规则：
 
@@ -201,13 +201,15 @@ sudo zerotier-cli set 8uhgr5689uyt532s allowDefault=1
  "type": "PRIVATE"
 ```
 
-查看和 VPS 端建立的 ZeroTier VPN状态：
+查看和 VPS 端建立的 ZeroTier VPN 状态：
+
+看 ping 的数据包是否正常，
 
 ```
 ping 192.168.192.1
 ```
 
-看 ping 的数据包是否正常，或
+或
 
 ```
 curl ifconfig.me
