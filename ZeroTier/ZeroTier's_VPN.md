@@ -127,6 +127,8 @@ COMMIT
 
 ### 客户端设置
 
+#### Linux 客户端
+
 如果客户端是 Raspberry Pi 或其他 Linux 系统，编辑 ```/etc/sysctl.conf``` 文件：
 
 ```
@@ -202,7 +204,37 @@ sudo zerotier-cli set 8uhgr5689uyt532s allowDefault=1
 查看和 VPS 端建立的 ZeroTier VPN状态：
 
 ```
+ping 192.168.192.1
+```
+
+看 ping 的数据包是否正常，或
+
+```
 curl ifconfig.me
 ```
 
 输出的 IP 地址如果是 VPS 的公网 IP，说明 VPN 隧道建立成功，如果没有输出结果或 IP 为本地 ISP 分配的，说明 VPN 隧道不成功。
+
+linux 桌面系统没有 GUI，通过 ```zerotier-cli``` 设置，方法和上面一样，可以通过浏览器访问 https://www.google.com 来验证是否成功建立 VPN 隧道。
+
+#### macOS 系统
+
+macOS 系统可以从官方下载编译好的安装包，有 GUI 管理界面，很方便设置。
+
+ZeroTier One.pkg 下载地址：https://download.zerotier.com/RELEASES/1.2.10/dist/
+
+安装完成后在屏幕顶部菜单栏有 ZeroTier One 图标，点击 ```Join Network``` 菜单，输入 https://my.zerotier.com/ 分配到的 16 位长度的 ```Network ID```，如 ```8uhgr5689uyt532s```，在 https://my.zerotier.com/ 勾选新加入的 macOS 客户端。
+
+打开 ZeroTier One 的 ```Network Details``` 菜单，会显示 ZeroTier 网络详情，如下图：
+
+![ZeroTier One for macOS](../img/ZeroTier_macOS.png)
+
+上图中有三个勾选项都要勾选，```Allow Managed``` ```Allow Global``` ```Allow Default``` 
+
+用 ping 命令查看和 VPS 端建立的 ZeroTier VPN状态：
+
+```
+ping 192.168.192.1
+```
+
+看 ping 的数据包是否正常，或通过浏览器访问 https://www.google.com 来验证是否成功建立 VPN 隧道。
