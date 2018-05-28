@@ -139,15 +139,15 @@ PrivateKey = +Cr59JzbCKz9rESqimHGi5C2QfIRYZ5xVMssiTAEqV4=
 
 ```sudo systemctl daemon-reload``` 
 
-```sudo systemctl enable wg-quick@wq0```
+```sudo systemctl enable wg-quick@wg0```
 
-```sudo systemctl disable wg-quick@wq0```
+```sudo systemctl disable wg-quick@wg0```
 
-```sudo systemctl start wg-quick@wq0```
+```sudo systemctl start wg-quick@wg0```
 
-```sudo systemctl restart wg-quick@wq0```
+```sudo systemctl restart wg-quick@wg0```
 
-```sudo systemctl status wg-quick@wq0```
+```sudo systemctl status wg-quick@wg0```
 
 手动启动或停止 ```WireGuard``` 守护进程：
 
