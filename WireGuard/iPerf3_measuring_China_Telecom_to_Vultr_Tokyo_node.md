@@ -11,7 +11,7 @@ iperf3 -s -V
 客户端参数
 
 ```
-iperf3 -c 192.168.100.1 -u -i 10 -t 30 -b 10G -R --get-server-output
+iperf3 -c 10.100.0.1 -u -i 10 -t 30 -b 10G -R --get-server-output
 ```
 
 测量输入结果如下，已包含客户端和服务器端的结果：
@@ -79,5 +79,6 @@ Test Complete. Summary Results:
 [  5]   0.00-30.41  sec  2.64 GBytes   745 Mbits/sec  0.000 ms  0/2070730 (0%)  sender
 [  5] (receiver statistics not available)
 CPU Utilization: local/sender 5.4% (0.4%u/5.0%s), remote/receiver 74.4% (10.4%u/64.0%s)
+
 iperf Done.
 ```
