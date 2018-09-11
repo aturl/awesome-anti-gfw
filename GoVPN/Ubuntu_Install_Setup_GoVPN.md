@@ -9,7 +9,7 @@ GoVPN 项目官方网站 http://www.govpn.info/
 
 GoVPN 源代码由开发者自我托管，代码仓库 http://git.cypherpunks.ru/cgit.cgi/govpn.git/
 
-GoVPN 最新版本 govpn-7.4 (August 27, 2017) 
+GoVPN 最新版本 govpn-7.5 (August 28, 2018) 
 
 （题外话，Sergey Matveev 因不认同 GitHub 的某些政策和做法，从 GitHub 仓库删除了 GoVPN 源代码。）
 
@@ -32,11 +32,11 @@ GoVPN 最新版本 govpn-7.4 (August 27, 2017)
 [bob@server ~]$ sudo apt-get -y upgrade
 ```
 
-### 安装 Go 1.9
+### 安装 Go 1.11
 
 ```
-[bob@server ~]$ wget https://storage.googleapis.com/golang/go1.9.linux-amd64.tar.gz
-[bob@server ~]$ sudo tar -xvf go1.9.linux-amd64.tar.gz
+[bob@server ~]$ wget https://storage.googleapis.com/golang/go1.11.linux-amd64.tar.gz
+[bob@server ~]$ sudo tar -xvf go1.11.linux-amd64.tar.gz
 [bob@server ~]$ sudo mv go /usr/local
 [bob@server ~]$ export GOROOT=/usr/local/go
 [bob@server ~]$ export GOPATH=$HOME/work
@@ -52,7 +52,7 @@ GoVPN 最新版本 govpn-7.4 (August 27, 2017)
 #### 打印输出内容如下，Go 安装成功
 
 ```
-go version go1.9 linux/amd64
+go version go1.11 linux/amd64
 ```
 #### 检查 Go 的环境变量配置
 
@@ -97,18 +97,18 @@ PKG_CONFIG="pkg-config"
 [bob@server ~]$ mkdir ～/work
 [bob@server ~]$ chmod a+x work
 [bob@server ~]$ cd work
-[bob@server ~]$ wget http://www.govpn.info/download/govpn-7.4.tar.xz
-[bob@server ~]$ wget http://www.govpn.info/download/govpn-7.4.tar.xz.sig
-[bob@server ~]$ gpg --verify govpn-7.4.tar.xz.sig govpn-7.4.tar.xz
-[bob@server ~]$ tar xf govpn-7.4.tar.xz
-[bob@server ~]$ make -C govpn-7.4 all
-[bob@server ~]$ cd govpn-7.4
+[bob@server ~]$ wget http://www.govpn.info/download/govpn-7.5.tar.xz
+[bob@server ~]$ wget http://www.govpn.info/download/govpn-7.5.tar.xz.sig
+[bob@server ~]$ gpg --verify govpn-7.5.tar.xz.sig govpn-7.5.tar.xz
+[bob@server ~]$ tar xf govpn-7.5.tar.xz
+[bob@server ~]$ make -C govpn-7.5 all
+[bob@server ~]$ cd govpn-7.5
 ```
 
 ---
 ## 在本地客户端 
 
-### 在 govpn-7.4 目录中创建客户端 Alice 连接服务器密码短语 key.txt
+### 在 govpn-7.5 目录中创建客户端 Alice 连接服务器密码短语 key.txt
 
 ```
 [alice@client ~]$ vi key.txt
@@ -146,7 +146,7 @@ $balloon$s=32768,t=16,p=2$pqrN42u1ruKOWDQUFlEMgg$b0QwK15I7VanKqDAyATrE5VHyL5a+r6
 
 ---
 ## 在服务器端
-### 在 govpn-7.4 目录中为客户端节点 Alice 创建配置文件，保存的文件名为 alice.yaml
+### 在 govpn-7.5 目录中为客户端节点 Alice 创建配置文件，保存的文件名为 alice.yaml
 
 ```
 [bob@server ~]$ vi alice.yaml
@@ -217,7 +217,7 @@ net.ipv4.ip_forward = 1
 [alice@client ~]$ sudo ip route add default dev tap10
 ```
 
-### 在客户端的 govpn-7.4 目录中启动 govpn-client
+### 在客户端的 govpn-7.5 目录中启动 govpn-client
 -key 值为启动客户端的密码短语
 -verifier 值为验证密钥
 -iface 值为虚拟网卡名称
@@ -225,7 +225,7 @@ net.ipv4.ip_forward = 1
 
 ```
 [alice@client ~]$ sudo ./govpn-client \
-    -key /home/alice/work/govpn-7.4/key.txt
+    -key /home/alice/work/govpn-7.5/key.txt
     -verifier '$balloon$s=32768,t=16,p=2$pqrN42u1ruKOWDQUFlEMgg' \
     -iface tap10 \
     -remote 12.34.56.78:1194
