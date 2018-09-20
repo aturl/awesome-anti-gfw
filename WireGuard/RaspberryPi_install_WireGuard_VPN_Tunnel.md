@@ -47,7 +47,7 @@ $ gcc --version | grep gcc
 gcc (Raspbian 6.3.0-18+rpi1) 6.3.0 20170516
 ```
 
-我的 gcc 版本没问题，不用升级，如果有错误提示，给 rpi-source 加上跳过参数
+如果 gcc 版本没问题，不用升级，如果有错误提示，给 rpi-source 加上跳过参数
 
 ```
 sudo rpi-source --skip-gcc
@@ -65,13 +65,18 @@ git WireGuard 源码并编译安装
 
 ```
 git clone https://git.zx2c4.com/WireGuard
-cd WireGuard/
-cd src/
+cd WireGuard/src
 make
 sudo make install
 ```
 
-如果没什么错误提示就完成了 WireGuard 安装。
+如果没什么错误提示就完成了 WireGuard 安装。启动 WireGuard 服务
+
+```sudo wg-quick up wg0```
+
+或
+
+```sudo systemctl restart wg-quick@wg0```
 
 ### 两端 VPN 隧道连接情况
 （假设服务器端公网 IPv4 是 12.34.56.78 ，客户端映射的内网 IPv4 是 111.222.1.1）
@@ -147,8 +152,8 @@ sudo wg-quick down wg0
 [Interface]
 PrivateKey = SHBjWA3uAYAZc+TUvr8RCTA5SVQnt+aSVkdlPKhD1Hk=
 Address = 10.10.0.5/24
-PostUp = echo nameserver 8.8.8.8 | resolvconf -a tun.%i -m 0 -x
-PostDown = resolvconf -d tun.%i
+DNS = 8.8.8.8
+MTU = 1472
 
 [Peer]
 PublicKey = mh+9HFTbMJKF8UGFEQpoJG1G81AMQ5+/tHAUWLIjHHU=
@@ -187,8 +192,8 @@ sudo systemctl start wg-quick@wg0
 #### 关于 WireGuard 默认端口
 WireGuard 默认端口是 51820 ，对于 GFW 来说那一个端口都一样，不过换一个也无妨。
 
-服务器端的端口在 wg0.conf 配置文件中指定监听端口就可以。 Raspberry Pi 通过修改 wg-quick 文件约第 152 行。
-更新 WireGuard 后会覆盖旧的 wg-quick 脚本，需要重新再修改端口。
+~服务器端的端口在 wg0.conf 配置文件中指定监听端口就可以。 Raspberry Pi 通过修改 wg-quick 文件约第 152 行。
+更新 WireGuard 后会覆盖旧的 wg-quick 脚本，需要重新再修改端口。~
 
 ```
 sudo vi /usr/bin/wg-quick
@@ -207,3 +212,18 @@ add_default() {
 Raspberry Pi 编译时可能出现类似 ```make: *** [module] Error 2``` 的错误，提示内核模块没有找到（这个错误提示暂时没有重现，有的话会补上）
 
 先用 ```rpi-update``` 更新 Raspberry Pi 内核和固件，重启后重新编译 WireGuard。
+
+#### 更新 WireGuard 源代码后重新编译安装
+```
+cd WireGuard
+git pull
+cd src
+make clean
+make
+sudo make install
+```
+重新启动 WireGuard 服务
+```
+sudo systemctl daemon-reload
+sudo systemctl restart wg-quick@wg0
+```
