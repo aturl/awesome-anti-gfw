@@ -1,6 +1,6 @@
 # 从源代码编译安装 Shadowsocks-libev
 
-### 编译安装 Shadowsocks-libev, libsodium, MbedTLS
+### 编译安装 Shadowsocks-libev 服务器，以及加密组件库 libsodium, MbedTLS
 
 详细内容见 [Shadowsocks-libev](https://github.com/shadowsocks/shadowsocks-libev) 在 GitHub 代码仓库，讨论或提问前往 [Shadowsocks-libev's Issues](https://github.com/shadowsocks/shadowsocks-libev/issues) 
 
