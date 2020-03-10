@@ -263,7 +263,7 @@ config rule
 	option dest_port '853'
 ```
 
-在本地访问 ```http://192.168.1.2```，进入 ```网络``` -> ```防火墙``` -> ```自定义规则```，添加一行自定义防火墙规则
+在本地访问 ```http://192.168.1.2```，进入 ```Network``` -> ```Firewall``` -> ```Custom Rules```，添加一行自定义防火墙规则
 
 ```
 iptables -t nat -A POSTROUTING -j MASQUERADE
