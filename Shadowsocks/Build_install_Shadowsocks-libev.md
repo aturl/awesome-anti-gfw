@@ -80,9 +80,11 @@ sudo vi /etc/shadowsocks-libev/ckserver.json
 ```
 根据 ```ck-server -u``` 生成的值修改 ```BypassUID```, ```PrivateKey```, ```AdminUID```
 
-### 创建 ```/etc/shadowsocks-libev/ckserver.json```
+### 创建 ```/etc/shadowsocks-libev/config.json```
 
 ```
+sudo vi /etc/shadowsocks-libev/config.json
+
 {
     "server":"0.0.0.0",
     "server_port":443,
