@@ -57,7 +57,7 @@ Network ID: 8ad5123ed69d6f69
 这一部分可以参考官方手册：[Getting Started with ZeroTier
 ](https://zerotier.atlassian.net/wiki/spaces/SD/pages/8454145/Getting+Started+with+ZeroTier)，也可以 Google 搜索 ```“zerotier 教程 OR 内网”```，有很多非常实用的图文教程。
 
-### 在 OpenWrt 上配置 ZeroTier (1/2)
+### 在 OpenWrt 上配置 ZeroTier (1/3)
 
 这一部分内容可以参考 [ZeroTier-OpenWrt WiKi](https://github.com/mwarning/zerotier-openwrt/wiki)，摘一部分列在下面：
 
@@ -203,7 +203,7 @@ root@ubuntu:/var/lib/zerotier-one# zerotier-cli listmoons
 
 moons 配置文件按照 moons 模版生成，不用修改，移至新建的 moons.d 目录中，并重启 ```zerotier-one``` 服务
 
-### 在 OpenWrt 上配置 ZeroTier (2/2)
+### 在 OpenWrt 上配置 ZeroTier (2/3)
 
 将 OpenWrt 加入自己的 ZeroTier Moons 网络，命令为 ```zerotier-cli orbit```，Moon ID 要输两遍，有多个 Moons 可以都依次添加进来。
 
