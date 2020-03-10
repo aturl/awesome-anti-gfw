@@ -1,6 +1,9 @@
 # 从源代码编译安装 Shadowsocks-libev
 
 ### 编译安装 Shadowsocks-libev, libsodium, MbedTLS
+
+详细内容见 [Shadowsocks-libev](https://github.com/shadowsocks/shadowsocks-libev) 在 GitHub 代码仓库，讨论或提问前往 [Shadowsocks-libev's Issues](https://github.com/shadowsocks/shadowsocks-libev/issues) 
+
 ```
 # Update && Upgrade OS
 sudo apt update && sudo apt -y upgrade
@@ -45,6 +48,8 @@ rm -rf shadowsocks-libev
 ### 安装和设置混淆插件 Cloak
 
 从 Cloak 项目库下载编译好的二进制文件，也可以按项目说明手动编译
+
+Cloak 项目说和使用见 [Cloak](https://github.com/cbeuw/Cloak) 在 GitHub 代码仓库，讨论或提问前往 [Cloak's Issues](https://github.com/cbeuw/Cloak/issues) 
 
 ```
 wget https://github.com/cbeuw/Cloak/releases/download/v2.1.3/ck-server-linux-amd64-2.1.3
@@ -114,13 +119,14 @@ setcap 'cap_net_bind_service=+ep' /usr/local/bin/ck-server
 exit
 ```
 
-### 启用、启动 Shadowsocks-libev 服务
+### 启用、启动 Shadowsocks-libev 系统服务
 
 ```
 sudo systemctl enable shadowsocks-libev
 sudo systemctl start shadowsocks-libev
 sudo systemctl status shadowsocks-libev
 ```
+
 如果服务状态出错，修改 ```/lib/systemd/system/shadowsocks-libev.service```
 
 ```
