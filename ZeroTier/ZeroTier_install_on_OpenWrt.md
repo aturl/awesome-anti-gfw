@@ -18,7 +18,7 @@ VPS 系统为 Ubuntu 19.10
 
 ZeroTier 版本为 1.4.6 ([ZeroTier-OpenWrt](https://github.com/mwarning/zerotier-openwrt))，可以使用 LuCI 安装，在 ```System``` -> ```Software```，先更新包列表 ```Update lists```，然后在筛选搜索中 zerotier，列出 zerotier 包，执行安装，同时会安装 ZeroTier 依赖包。
 
-也可以使用命令行安装
+也可以使用命令行安装，顺带更新 OpenWrt 的其他包。
 
 ```
 opkg update
@@ -171,9 +171,9 @@ root@ubuntu:/var/lib/zerotier-one# vi moon.json
 
 ```"stableEndpoints": ["VPS public IP/9993"]``` 这一行需要修改，将双引号中的内容 ```VPS public IP/9993``` 修改为 VPS 的公网 IP，改完后一般是这样 ```11.22.33.44/9993```，端口号 ```/9993``` 保留。这个端口可以自定义，非 9993 也可以，无论哪个端口都要在防火墙放行。
 
-```"**************************"``` 全部为加密的身份和认证信息，不可以修改。
+```"**************************"``` 全部为生成的身份和认证信息，不可以修改。
 
-用上面创建的 moon 模版生成 moon 配置文件
+生成 moon 配置文件
 
 ```
 root@ubuntu:/var/lib/zerotier-one# zerotier-idtool genmoon moon.json
@@ -201,7 +201,7 @@ root@ubuntu:/var/lib/zerotier-one# zerotier-cli listmoons
 ]
 ```
 
-moons 配置文件按照 moons 模版生成，不用修改，移至新建的 moons.d 目录中，并重启 ```zerotier-one``` 服务
+```0000004c6c00c9a0.moon``` 是生成的 Moon 配置文件，不用修改，移至新建的 moons.d 目录中，并重启 ```zerotier-one``` 服务
 
 ### 在 OpenWrt 上配置 ZeroTier (2/3)
 
@@ -228,11 +228,11 @@ root@OpenWrt:~# zerotier-cli listpeers
 
 至此，ZeroTier 网络环境益基本搭建完毕，共有三部分，ZeroTier 网络控制台、VPS 上的 Moon 服务器、本地的 OpenWrt。通过 ZeroTier 建立的 Moon 服务器和 OpenWrt 的虚拟网段已都分配到了各自的 IP 地址：
 
-OpenWrt：172.28.28.2 (ZT IP)，LAN 的物理 IP 为 192.168.1.2
+OpenWrt：```172.28.28.2``` (ZT IP)，LAN 的物理 IP 为 ```192.168.1.2```
 
-VPS 上的 Moon 服务器：172.28.28.10 (ZT IP)，公网 IP 为 11.22.33.44
+VPS 上的 Moon 服务器：```172.28.28.10``` (ZT IP)，公网 IP 为 ```11.22.33.44```
 
-我们的目的很简单，在 VPS 上能访问 192.168.1.2 这个 IP 地址以及 192.168.1.0/24 的设备就可以。
+我们的目的很简单，在 VPS 上能访问 ```192.168.1.2``` 这个 IP 地址以及 ```192.168.1.0/24``` 的设备就可以。
 
 ### 在 OpenWrt 上配置 ZeroTier (3/3)
 
@@ -260,7 +260,7 @@ config rule
 	option src '*'
 	option target 'ACCEPT'
 	option proto 'udp'
-	option dest_port '853'
+	option dest_port '9993'
 ```
 
 在本地访问 ```http://192.168.1.2```，进入 ```Network``` -> ```Firewall``` -> ```Custom Rules```，添加一行自定义防火墙规则
