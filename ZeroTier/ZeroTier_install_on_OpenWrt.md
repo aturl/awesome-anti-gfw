@@ -59,7 +59,7 @@ Network ID: 8ad5123ed69d6f69
 
 ### 在 OpenWrt 上配置 ZeroTier (1/3)
 
-这一部分内容可以参考 [ZeroTier-OpenWrt WiKi](https://github.com/mwarning/zerotier-openwrt/wiki)，摘一部分列在下面：
+这一部分内容可以参考 [ZeroTier-OpenWrt WiKi](https://github.com/mwarning/zerotier-openwrt/wiki#configure-zerotier-on-your-openwrt-router-using-uci)，摘一部分列在下面：
 
 ZeroTier 安装后会生成默认的配置文件 ```/etc/config/zerotier```
 
@@ -236,7 +236,7 @@ VPS 上的 Moon 服务器：```172.28.28.10``` (ZT IP)，公网 IP 为 ```11.22.
 
 ### 在 OpenWrt 上配置 ZeroTier (3/3)
 
-这一部分还是参考 [ZeroTier-OpenWrt WiKi](https://github.com/mwarning/zerotier-openwrt/wiki)，摘一部分列在下面：
+这一部分还是参考 [ZeroTier-OpenWrt WiKi](https://github.com/mwarning/zerotier-openwrt/wiki#using-command-line-in-1806-or-1907)，摘一部分列在下面：
 
 ```
 root@OpenWrt:~# uci add firewall rule
