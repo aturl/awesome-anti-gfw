@@ -218,7 +218,7 @@ root@OpenWrt:~# zerotier-cli listpeers
   200 listpeers 092fcf15b7 77.66.55.44/9993;6427;6201 229 - PLANET
 ```
 
-```zerotier-cli listpeers``` 命令可以列出 OpenWrt 加入的 ZeroTier 网络节点状态，ztaddr 地址 ```4c6c00c9a0``` 就是自己的 Moon 服务器角色为 LEAF（老版本会显示为 MOON，），其他三个角色为 PLANET 地址为 ZeroTier 官方的行星服务器。
+```zerotier-cli listpeers``` 命令可以列出 OpenWrt 加入的 ZeroTier 网络节点状态，ztaddr 地址 ```4c6c00c9a0``` 就是自己的 Moon 服务器角色为 LEAF（偶尔也会显示为 MOON，），其他三个角色为 PLANET 地址为 ZeroTier 官方的行星服务器。
 
 ### 在 ZeroTier 控制台 [my.zerotier.com](https://my.zerotier.com) 设置 OpenWrt 的路由
 
