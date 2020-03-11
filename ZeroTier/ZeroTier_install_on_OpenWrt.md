@@ -281,4 +281,15 @@ ZeroTier 1.4.6 创建的虚拟网络设备名为 ```ztyouqrusr```，可以在终
 
 因为以上操作的目的就是访问局域网的内网设备，所以以最简单的方法实现就好。自定义防火墙规则可以 Google 搜索 ```zerotier iptables "Custom Rules"```
 
+这里要说明一下，如果防火墙添加自定义规则 ```iptables -t nat -A POSTROUTING -j MASQUERADE```，使用 ```zerotier-cli info``` 会有下面的错误信息，并且可能导致 LuCI Web 访问 ```http://192.168.1.2``` 失败，而 ```http://172.28.28.22``` 可以。 
+
+```
+root@OpenWrt:~# zerotier-cli info
+Error connecting to the ZeroTier service: 
+
+Please check that the service is running and that TCP port 9993 can be contacted via 127.0.0.1.
+```
+
+那么，只能删掉这条自定义规则 ```iptables -t nat -A POSTROUTING -j MASQUERADE```，如果删掉，则会影响访问内网设备。结果是简便的办法并不周全，想要完美解决这些问题就要考虑新建 ZeroTier 网络接口，重新设置路由表和防火墙规则。
+
 以上都完成后，可以 Nmap 扫描一下 ```192.168.1.0/24``` 内网的网段，应该会列出内网的物理设备，列出的设备按开放的端口和提供的服务就可以访问了。
