@@ -290,6 +290,16 @@ Error connecting to the ZeroTier service:
 Please check that the service is running and that TCP port 9993 can be contacted via 127.0.0.1.
 ```
 
-那么，只能删掉这条自定义规则 ```iptables -t nat -A POSTROUTING -j MASQUERADE```，如果删掉，则会影响访问内网设备。结果是简便的办法并不周全，想要完美解决这些问题就要考虑新建 ZeroTier 网络接口，重新设置路由表和防火墙规则。
+要么删掉这条自定义规则 ```iptables -t nat -A POSTROUTING -j MASQUERADE```，要么在第一行新增一条规则 ```iptables -t nat -I POSTROUTING -o lo -j ACCEPT```。
+
+在变换规则后，下面四条自定义规则似乎解决了上面提到的问题，暂时无异常。简便的办法并不一定周全，想要完美解决这些问题就要考虑新建 ZeroTier 网络接口，重新设置路由表和防火墙规则。
+
+```
+iptables -t nat -I POSTROUTING -o lo -j ACCEPT
+iptables -t nat -A POSTROUTING -j MASQUERADE
+iptables -I FORWARD -i ztyouqrusr -j ACCEPT
+iptables -I FORWARD -o ztyouqrusr -j ACCEPT
+iptables -t nat -I POSTROUTING -o ztyouqrusr -j MASQUERADE
+```
 
 以上都完成后，可以 Nmap 扫描一下 ```192.168.1.0/24``` 内网的网段，应该会列出内网的物理设备，列出的设备按开放的端口和提供的服务就可以访问了。
