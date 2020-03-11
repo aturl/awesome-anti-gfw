@@ -263,12 +263,22 @@ config rule
 	option dest_port '9993'
 ```
 
+也可以在 Web 界面查看
+
+![Allow ZeroTier Inbound](../img/Allow-ZeroTier-Inbound.png)
+
 在本地访问 ```http://192.168.1.2```，进入 ```Network``` -> ```Firewall``` -> ```Custom Rules```，添加一行自定义防火墙规则
 
 ```
 iptables -t nat -A POSTROUTING -j MASQUERADE
+iptables -I FORWARD -i ztyouqrusr -j ACCEPT
+iptables -I FORWARD -o ztyouqrusr -j ACCEPT
+iptables -t nat -I POSTROUTING -o ztyouqrusr -j MASQUERADE
 ```
+![Custom Rules](../img/Custom_Rules.png)
 
-因为以上操作的目的就是访问局域网的内网设备，所以以最简单的方法实现就好。自定义防火墙规则可以 Google 搜索 ```zerotier "iptables -t nat -A POSTROUTING -j MASQUERADE"```
+ZeroTier 1.4.6 创建的虚拟网络设备名为 ```ztyouqrusr```，可以在终端用 ```ip a``` 或 ```ifocnfig``` 命令查看。
+
+因为以上操作的目的就是访问局域网的内网设备，所以以最简单的方法实现就好。自定义防火墙规则可以 Google 搜索 ```zerotier iptables "Custom Rules"```
 
 以上都完成后，可以 Nmap 扫描一下 ```192.168.1.0/24``` 内网的网段，应该会列出内网的物理设备，列出的设备按开放的端口和提供的服务就可以访问了。
