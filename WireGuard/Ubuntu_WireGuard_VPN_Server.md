@@ -18,7 +18,7 @@ WireGuard 源代码在 GitHub 的镜像仓库 https://github.com/WireGuard
 sudo apt install wireguard
 ```
 
-或编译安装，大多数 Linux 发行版都适用下面的方法，内核版本 3.10 ≤ kernel ≤ 5.5，可以参考 WireGuard 官方文档 [Compiling the Kernel Module from Source](https://www.wireguard.com/compilation/)
+或编译安装，大多数 Linux 发行版都适用下面的方法，内核版本 ≥ 3.10 or ≤ 5.5，可以参考 WireGuard 官方文档 [Compiling the Kernel Module from Source](https://www.wireguard.com/compilation/)
 
 ```
 sudo apt-get install libelf-dev linux-headers-$(uname -r) build-essential pkg-config
