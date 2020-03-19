@@ -1,6 +1,6 @@
 # 在 Raspberry Pi 2/3/4 B+ 安装部署 WireGuard，建立 VPN 隧道
 
-## Raspberry Pi 版本和系统情况
+### Raspberry Pi 版本和系统情况
 
 Raspberry Pi 2/3/4 B+ 操作系统（ ≥ RASPBIAN STRETCH LITE, 2017-09-07, Kernel 版本 4.9）
 
@@ -24,7 +24,7 @@ pi@raspberrypi:~$ sudo make -C wireguard-tools/src -j$(nproc)
 pi@raspberrypi:~$ sudo make -C wireguard-tools/src install
 ```
 
-#### 在 Raspberry Pi 上 wg0.conf 配置文件示例以及启动服务
+### 在 Raspberry Pi 上 wg0.conf 配置文件示例以及启动服务
 
 ```
 pi@raspberrypi:~$ sudo vi /etc/wireguard/wg0.conf
