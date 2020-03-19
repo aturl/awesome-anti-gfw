@@ -1,6 +1,6 @@
 # 在 Ubuntu 部署 WireGuard VPN 服务器
 
-## 关于 WireGuard
+### 关于 WireGuard
 
 WireGuard 是简单、快速、高效并且安全的开源 VPN 软件，它采用最先进的加密协议，基于 Linux 内核实现。
 
@@ -10,74 +10,30 @@ WireGuard 源代码由开发者自我托管，代码仓库 https://git.zx2c4.com
 
 WireGuard 源代码在 GitHub 的镜像仓库 https://github.com/WireGuard
 
-## 在服务器端部署 WireGuard
+### 在服务器端部署 WireGuard
 
-服务器系统为 Ubuntu 18.04
-
-#### 启用服务器 Linux 内核数据转发
-
-查看当前配置，运行以下命令：
+服务器系统为 Ubuntu 19.10，从 Linux 发行版的软件仓库安装 [WireGuard Installation](https://www.wireguard.com/install/)
 
 ```
-sudo sysctl net.ipv4.ip_forward
+sudo apt install wireguard
 ```
 
-输出 ```net.ipv4.ip_forward = 0``` 为未启用，输出 ```net.ipv4.ip_forward = 1``` 为已启用。
-
-假如未启用，需要设置为启用，运行以下命令：
+或编译安装，大多数 Linux 发行版都适用下面的方法，内核版本 3.10 ≤ kernel ≤ 5.5，可以参考 WireGuard 官方文档 [Compiling the Kernel Module from Source](https://www.wireguard.com/compilation/)
 
 ```
-sudo vi /etc/sysctl.conf
+sudo apt-get install libelf-dev linux-headers-$(uname -r) build-essential pkg-config
+git clone https://git.zx2c4.com/wireguard-linux-compat
+git clone https://git.zx2c4.com/wireguard-tools
+make -C wireguard-linux-compat/src -j$(nproc)
+sudo make -C wireguard-linux-compat/src install
+make -C wireguard-tools/src -j$(nproc)
+sudo make -C wireguard-tools/src install
 ```
 
-在 ```/etc/sysctl.conf``` 文件底部添加一行
-
 ```
-net.ipv4.ip_forward = 1
-```
-
-```:wq!``` 保存并退出编辑状态
-
-用 ```sysctl -p``` 命令触发新的内核配置，使其生效。
-
-```
+sudo sysctl -w net.ipv4.ip_forward=1
 sudo sysctl -p
 ```
-
-再次查看当前配置，运行以下命令：
-
-```
-sudo sysctl net.ipv4.ip_forward
-```
-
-输出显示已经启用数据转发：
-
-```
-net.ipv4.ip_forward = 1
-```
-
-官方提供的快速安装指南 https://www.wireguard.com/install/
-
-### WireGuard 安装
-
-#### 从 PPA 库安装
-
-```
-sudo add-apt-repository ppa:wireguard/wireguard
-sudo apt-get update
-sudo apt-get install wireguard
-```
-
-#### 或 Clone 源代码编译安装
-
-```
-sudo apt-get install -y git libmnl-dev libelf-dev linux-headers-$(uname -r) build-essential pkg-config
-git clone https://git.zx2c4.com/WireGuard
-cd WireGuard/src
-make
-sudo make install
-```
-
 #### 生成公钥、私钥、共享密钥
 
 ```
@@ -107,33 +63,33 @@ cat presharedkey
 Vv0MdBNolqbnsBPQPf0ttJecOw2QC8QqWBVieNtvoIo=
 ```
 
-#### 编辑并保存 wg0 配置文件 wg0.conf
+#### 编辑并保存 wg0 配置文件 wg0.conf（wg0 是网络接口名称）
 
 ```
-sudo vi wg0.conf
+sudo vi /etc/wireguard/wg0.conf
 ```
-
-#### wg0.conf 配置文件内容如下：
-
-ListenPort = 监听端口 51820
-
-PrivateKey = 服务器私钥
-
-AllowedIPs = VPN 隧道的内网 IP 段
-
-PostUp 和 PostDown 是 iptables 规则
-
-下面是典型的服务器端 wg0 配置文件（wg0 是网络接口名称）
 
 ```
 [Interface]
 Address = 10.100.0.1/24
-SaveConfig = true
+ListenPort = 51820
+DNS = 8.8.8.8
 PostUp = iptables -A FORWARD -i wg0 -j ACCEPT; iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
 PostDown = iptables -D FORWARD -i wg0 -j ACCEPT; iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE
-ListenPort = 51820
 PrivateKey = +Cr59JzbCKz9rESqimHGi5C2QfIRYZ5xVMssiTAEqV4=
+SaveConfig = true
 ```
+
+```wg0.conf``` 配置文件内容如下：
+
+```ListenPort =``` 监听端口 51820
+
+```PrivateKey =``` 服务器私钥
+
+```AllowedIPs =``` VPN 隧道的内网 IP 段
+
+```PostUp``` 和 ```PostDown``` 是 iptables 规则
+
 
 将 ```WireGuard``` 添加到系统服务中，由 Systemctl 管理，分别为重载守护进程、启用服务、禁用服务、启动服务、重启服务、服务状态。
 
@@ -155,7 +111,7 @@ PrivateKey = +Cr59JzbCKz9rESqimHGi5C2QfIRYZ5xVMssiTAEqV4=
 
 ```sudo wg-quick down wg0```
 
-### 添加客户端
+#### 添加或删除客户端
 
 如果已在客户端安装了 WireGuard 并生成了公钥、私钥，服务器端添加命令如下：
 
@@ -167,10 +123,16 @@ sudo wg set wg0 peer 8K8h4+xWpAXfL9bJSmhbcFHlvMr2/2ITpNI4Ua998kh= allowed-ips 10
 
 ```allowed-ips 10.100.0.2``` 为客户端 IP 地址
 
+有过时或无效的客户端节点，用下面命令移除：
+
+```
+sudo wg set wg0 peer 88K8h4+xWpAXfL9bJSmhbcFHlvMr2/2ITpNI4Ua998kh= remove
+```
+
 检查服务器端设置是否正常，与客户端的 VPN 隧道是否建立成功
 
 ```
-sudo wg show
+sudo wg
 ```
 
 正常情况应该输出以下内容：
@@ -194,10 +156,4 @@ peer: 8K8h4+xWpAXfL9bJSmhbcFHlvMr2/2ITpNI4Ua998kh=
 
 ```
 ping 10.100.0.2
-```
-
-服务器端每添加一个客户端节点，便会缓存在服务器端的 ```wg0.conf``` 配置文件中，有过时或无效的客户端节点，用下面命令移除：
-
-```
-sudo wg set wg0 peer 88K8h4+xWpAXfL9bJSmhbcFHlvMr2/2ITpNI4Ua998kh= remove
 ```
