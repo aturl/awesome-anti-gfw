@@ -119,6 +119,7 @@ root@openwrt:~# zerotier-cli info
 ```41c7017c10``` 为客户端 ID，前去 my.zerotier.com 认证并同意 ```41c7017c10``` 加入自己的网络，再回到 OpenWrt 查看网络状态
 
 ```
+root@OpenWrt:~# zerotier-one -d
 root@OpenWrt:~# zerotier-cli info
 200 info 41c7017c10 1.4.6 ONLINE
 ```
