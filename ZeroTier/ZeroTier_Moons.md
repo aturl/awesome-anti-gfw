@@ -118,7 +118,8 @@ sudo cat identity.public
 用 ```zerotier-idtool``` 工具根据 ```identity.public``` 生成 moon 的配置文件 ```moon.json```
 
 ```
-sudo zerotier-idtool initmoon identity.public >> moon.json
+sudo -s
+zerotier-idtool initmoon identity.public >> moon.json
 ```
 
 ```cat moon.json``` 文件内容
