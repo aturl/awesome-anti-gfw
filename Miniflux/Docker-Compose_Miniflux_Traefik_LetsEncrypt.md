@@ -1,4 +1,4 @@
-# 在 Docker 中部署 Miniflux 服务
+# 使用 Docker 自建 Miniflux 服务
 
 在 VPS 自建 RSS 阅读服务，浏览第一手信息资讯。搭建服务用到的一些服务：
 
