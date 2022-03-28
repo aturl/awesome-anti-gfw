@@ -7,6 +7,8 @@ ZeroTier 官方手册 [ZeroTier Manual: Creating Your Own Roots](https://www.zer
 好运博客 | 创建 zerotier moon 其实很简单 www.lucktu.com/archives/766.html
 
 ___
+***ZeroTier 最新版本是 1.8.6 （即将发布1.8.7）可以将操作系统更新至新版本安装  ZeroTier，或者用官方一键安装脚本安装 ```curl -s https://install.zerotier.com | sudo bash```***
+
 ***以下记录仅作为个人建立 ZeroTier Moon 服务器的记录，尚未再次验证，如有错误会纠正并更新***
 
 ### 服务器环境
