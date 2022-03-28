@@ -82,7 +82,7 @@ volumes:
 
 ```
 mkdir miniflux && cd miniflux
-wget https://github.com/aturl/awesome-anti-gfw/blob/master/Miniflux/traefik.yml
+wget https://raw.githubusercontent.com/aturl/awesome-anti-gfw/master/Miniflux/traefik.yml
 ```
 按上面建议的修改说明将 ```traefik.yml``` 改成自己的设定，拉取容器镜像然后运行服务。
 
