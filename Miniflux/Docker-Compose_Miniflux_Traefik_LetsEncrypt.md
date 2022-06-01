@@ -90,4 +90,13 @@ wget https://raw.githubusercontent.com/aturl/awesome-anti-gfw/master/Miniflux/tr
 docker-compose -f traefik.yml up -d db
 docker-compose -f traefik.yml up
 ```
+
+将 miniflux 升级到新版本。
+
+```
+docker-compose down
+docker-compose -f traefik.yml pull
+docker-compose -f traefik.yml up -d db
+docker-compose -f traefik.yml up
+```
 参考 Miniflux v2 项目文档 https://github.com/miniflux/v2/tree/master/contrib/docker-compose
